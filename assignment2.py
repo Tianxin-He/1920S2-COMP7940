@@ -15,15 +15,15 @@ from linebot.exceptions import (
 )
 
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, ImageMessage, VideoMessage, FileMessage, StickerMessage, StickerSendMessage
+    MessageEvent, TextMessage, TextSendMessage, ImageMessage, VideoMessage, FileMessage, StickerMessage, StickerSendMessage,VideoSendMessage
 )
 from linebot.utils import PY3
 
 app = Flask(__name__)
 
 # get channel_secret and channel_access_token from your environment variable
-channel_secret = os.getenv('LINE_CHANNEL_SECRET', None)
-channel_access_token = os.getenv('LINE_CHANNEL_ACCESS_TOKEN', None)
+channel_secret = os.getenv('LINE_CHANNEL_SECRET',None ) #'c15ac0aa957a0eb2c158fb66dbf70b72'
+channel_access_token = os.getenv('LINE_CHANNEL_ACCESS_TOKEN', None)#'nd3QnT44stVAGwLunsHIB8b2h81FXaToEQ7Dr4GmgJPm8blYvdWx1ptq8mWOLU23ER80P3WctDUwyS2nf8lEXYJMThKR+qFKftNmmmco3asMSA6wuqu9N8NKLr1Mu/wj5aavT9RhTeNnrJBf0Wc4VAdB04t89/1O/w1cDnyilFU='
 
 # obtain the port that heroku assigned to this app.
 heroku_port = os.getenv('PORT', None)
@@ -113,6 +113,30 @@ def handle_FileMessage(event):
 	event.reply_token,
 	TextSendMessage(text="Nice file!")
     )
+
+
+# Send the vedio
+def reply_vedio(event):
+    print(event.message.text)
+    
+    if 'vedio' in event.message.text:
+        message = VideoSendMessage(
+            original_content_url='https://example.com/original.mp4',
+            preview_image_url='https://example.com/preview.jpg'
+        )
+        line_bot_api.reply_message(event.reply_token, message)
+        
+    else: 
+        msg = 'You said: "' + event.message.text + '" '
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(msg)
+        )
+
+        
+    
+
+
 
 if __name__ == "__main__":
     arg_parser = ArgumentParser(
