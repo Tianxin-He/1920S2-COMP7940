@@ -7,6 +7,8 @@ import redis
 from argparse import ArgumentParser
 
 from flask import Flask, request, abort
+import requests
+
 from linebot import (
     LineBotApi, WebhookParser
 )
@@ -161,6 +163,17 @@ def reply_vedio(event):
                 longitude=114.191687
             )
         )
+
+    elif 'data' in event.message.text:
+        resp = requests.get('https://interface.sina.cn/news/wap/fymap2020_data.d.json')
+        #currency_data = resp.json()
+        data_gntotal = resp['data']['gntotal']
+        data_deathtotal = resp['data']['deathtotal']
+        data_curetotal = resp['data']['curetotal']
+
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=f'Total infected persons number in China:{data_gntotal},Death total :{data_deathtotal},Cure total :{data_curetotal}'  ))
 
         
     else: 
