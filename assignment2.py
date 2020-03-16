@@ -15,15 +15,16 @@ from linebot.exceptions import (
 )
 
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, ImageMessage, VideoMessage, FileMessage, StickerMessage, StickerSendMessage,VideoSendMessage
+    MessageEvent, TextMessage, TextSendMessage, ImageMessage, VideoMessage, FileMessage, StickerMessage, StickerSendMessage,
+    VideoSendMessage,TemplateSendMessage,ConfirmTemplate,PostbackTemplateAction,MessageTemplateAction
 )
 from linebot.utils import PY3
 
 app = Flask(__name__)
 
 # get channel_secret and channel_access_token from your environment variable
-channel_secret = os.getenv('LINE_CHANNEL_SECRET',None ) #'c15ac0aa957a0eb2c158fb66dbf70b72'
-channel_access_token = os.getenv('LINE_CHANNEL_ACCESS_TOKEN', None)#'nd3QnT44stVAGwLunsHIB8b2h81FXaToEQ7Dr4GmgJPm8blYvdWx1ptq8mWOLU23ER80P3WctDUwyS2nf8lEXYJMThKR+qFKftNmmmco3asMSA6wuqu9N8NKLr1Mu/wj5aavT9RhTeNnrJBf0Wc4VAdB04t89/1O/w1cDnyilFU='
+channel_secret = os.getenv('LINE_CHANNEL_SECRET','c15ac0aa957a0eb2c158fb66dbf70b72' ) #
+channel_access_token = os.getenv('LINE_CHANNEL_ACCESS_TOKEN', 'nd3QnT44stVAGwLunsHIB8b2h81FXaToEQ7Dr4GmgJPm8blYvdWx1ptq8mWOLU23ER80P3WctDUwyS2nf8lEXYJMThKR+qFKftNmmmco3asMSA6wuqu9N8NKLr1Mu/wj5aavT9RhTeNnrJBf0Wc4VAdB04t89/1O/w1cDnyilFU=')#
 
 # obtain the port that heroku assigned to this app.
 heroku_port = os.getenv('PORT', None)
@@ -114,6 +115,9 @@ def handle_FileMessage(event):
 	TextSendMessage(text="Nice file!")
     )
 
+# Self check process
+# def self_Check():
+
 
 # Send the vedio
 def reply_vedio(event):
@@ -125,6 +129,27 @@ def reply_vedio(event):
             preview_image_url='https://cdn.mos.cms.futurecdn.net/ssZGg3at5Tad2PpEyUCKh3-320-80.jpg'
         )
         line_bot_api.reply_message(event.reply_token, message)
+
+    elif 'self check' in event.message.text:
+        message = TemplateSendMessage(
+            alt_text='Confirm template',
+            template=ConfirmTemplate(  
+                text='Are you sure?',
+                actions=[
+                    PostbackTemplateAction(
+                        label='postback',
+                        text='postback text',
+                        data='action=buy&itemid=1'  #what is data for?
+                    ),
+                    MessageTemplateAction(
+                        label='message',
+                        text='message text'
+                    )
+                ]
+            )
+        )
+        line_bot_api.reply_message(event.reply_token, message)
+
         
     else: 
         msg = 'You said: "' + event.message.text + '" '
@@ -146,3 +171,6 @@ if __name__ == "__main__":
     options = arg_parser.parse_args()
 
     app.run(host='0.0.0.0', debug=options.debug, port=heroku_port)
+
+
+
