@@ -121,8 +121,8 @@ def reply_vedio(event):
     
     if 'vedio' in event.message.text:
         message = VideoSendMessage(
-            original_content_url='https://example.com/original.mp4',
-            preview_image_url='https://example.com/preview.jpg'
+            original_content_url='https://youtu.be/mOV1aBVYKGA',
+            preview_image_url='https://cdn.mos.cms.futurecdn.net/ssZGg3at5Tad2PpEyUCKh3-320-80.jpg'
         )
         line_bot_api.reply_message(event.reply_token, message)
         
