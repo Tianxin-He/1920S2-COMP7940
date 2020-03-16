@@ -14,10 +14,11 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 
-from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, ImageMessage, VideoMessage, FileMessage, StickerMessage, StickerSendMessage,
-    VideoSendMessage,TemplateSendMessage,ConfirmTemplate,PostbackTemplateAction,MessageTemplateAction
-)
+from linebot.models import *
+#(
+ #   MessageEvent, TextMessage, TextSendMessage, ImageMessage, VideoMessage, FileMessage, StickerMessage, StickerSendMessage,
+  #  VideoSendMessage,TemplateSendMessage,ConfirmTemplate,PostbackTemplateAction,MessageTemplateAction
+#)
 from linebot.utils import PY3
 
 app = Flask(__name__)
@@ -116,7 +117,8 @@ def handle_FileMessage(event):
     )
 
 # Self check process
-# def self_Check():
+
+     
 
 
 # Send the vedio
@@ -130,25 +132,35 @@ def reply_vedio(event):
         )
         line_bot_api.reply_message(event.reply_token, message)
 
-    elif 'self check' in event.message.text:
+    elif 'call' in event.message.text:
         message = TemplateSendMessage(
             alt_text='Confirm template',
             template=ConfirmTemplate(  
-                text='Are you sure?',
+                text='Are you sure to call for help?',
                 actions=[
-                    PostbackTemplateAction(
-                        label='postback',
-                        text='postback text',
-                        data='action=buy&itemid=1'  #what is data for?
+                    URIAction(
+                        label='Call',
+                        text='call',
+                        uri='tel:000000'
                     ),
                     MessageTemplateAction(
-                        label='message',
-                        text='message text'
+                        label='no',
+                        text='no'
                     )
                 ]
             )
         )
         line_bot_api.reply_message(event.reply_token, message)
+
+    elif 'hospital' in event.message.text:
+        line_bot_api.reply_message(
+            event.reply_token,LocationSendMessage(
+                title='Hospital location', 
+                address='Hong Kong Baptist Hospital', 
+                latitude=22.342483, 
+                longitude=114.191687
+            )
+        )
 
         
     else: 
