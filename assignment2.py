@@ -23,6 +23,8 @@ from linebot.models import *
 #)
 from linebot.utils import PY3
 
+from bs4 import BeautifulSoup
+
 app = Flask(__name__)
 
 # get channel_secret and channel_access_token from your environment variable
@@ -127,6 +129,20 @@ def get_news():
     #    content += f'{rs}\n\n'
     return content
 
+def apple_news():
+    target_url = 'https://tw.appledaily.com/new/realtime'
+    print('Start parsing appleNews....')
+    rs = requests.session()
+    res = rs.get(target_url, verify=False)
+    soup = BeautifulSoup(res.text, 'html.parser')
+    content = ""
+    for index, data in enumerate(soup.select('.rtddt a'), 0):
+        if index == 4:
+            return content
+        link = data['href']
+        content += '{}\n\n'.format(link)
+    return content
+
      
 
 
@@ -171,6 +187,12 @@ def handle_TextMessage(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=f'Title :{result_title},\n Summary :{result_summary},\n Source Url :{result_sourceUrl}'  ))
+
+    elif event.message.text == "apple news":
+        content = apple_news()
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
 
     elif 'hospital' in event.message.text:
         line_bot_api.reply_message(
