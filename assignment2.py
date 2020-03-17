@@ -26,7 +26,7 @@ from linebot.utils import PY3
 app = Flask(__name__)
 
 # get channel_secret and channel_access_token from your environment variable
-channel_secret = os.getenv('LINE_CHANNEL_SECRET','c15ac0aa957a0eb2c158fb66dbf70b72' ) #
+channel_secret = os.getenv('LINE_CHANNEL_SECRET','c15ac0aa957a0eb2c158fb66dbf70b72' ) 
 channel_access_token = os.getenv('LINE_CHANNEL_ACCESS_TOKEN', 'nd3QnT44stVAGwLunsHIB8b2h81FXaToEQ7Dr4GmgJPm8blYvdWx1ptq8mWOLU23ER80P3WctDUwyS2nf8lEXYJMThKR+qFKftNmmmco3asMSA6wuqu9N8NKLr1Mu/wj5aavT9RhTeNnrJBf0Wc4VAdB04t89/1O/w1cDnyilFU=')#
 
 # obtain the port that heroku assigned to this app.
@@ -62,7 +62,7 @@ def callback():
         if not isinstance(event, MessageEvent):
             continue
         if isinstance(event.message, TextMessage):
-            reply_vedio(event)
+            handle_TextMessage(event)
         if isinstance(event.message, ImageMessage):
             handle_ImageMessage(event)
         if isinstance(event.message, VideoMessage):
@@ -79,14 +79,8 @@ def callback():
 
     return 'OK'
 
-# Handler function for Text Message
-def handle_TextMessage(event):
-    print(event.message.text)
-    msg = 'You said: "' + event.message.text + '" '
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(msg)
-    )
+
+
 
 # Handler function for Sticker Message
 def handle_StickerMessage(event):
@@ -119,12 +113,24 @@ def handle_FileMessage(event):
     )
 
 # Self check process
+def get_news():
+    resp = requests.get('https://interface.sina.cn/news/wap/fymap2020_data.d.json')
+    jresp = resp.json()
+    result_title = jresp['results']['title']  #这里读取的格式不对？
+    #result_summary = jresp['results']['summary']
+    #result_sourceUrl = jresp['results']['sourceUrl']
+    content=""
+    for index,rs in result_title:
+        if index == 4:
+            return content
+        content += f'{rs}\n\n'
+    return content
 
      
 
 
-# Send the vedio
-def reply_vedio(event):
+# Handler function for Text Message
+def handle_TextMessage(event):
     print(event.message.text)
     
     if 'vedio' in event.message.text:
@@ -154,6 +160,12 @@ def reply_vedio(event):
         )
         line_bot_api.reply_message(event.reply_token, message)
 
+    elif 'news' in event.message.text:
+        content = get_news()
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
+
     elif 'hospital' in event.message.text:
         line_bot_api.reply_message(
             event.reply_token,LocationSendMessage(
@@ -164,7 +176,7 @@ def reply_vedio(event):
             )
         )
 
-    elif 'news' in event.message.text:
+    elif 'real time data' in event.message.text:
         resp = requests.get('https://interface.sina.cn/news/wap/fymap2020_data.d.json')
         jresp = resp.json()
         data_gntotal = jresp['data']['gntotal']  #这里读取的格式不对？
@@ -173,19 +185,23 @@ def reply_vedio(event):
 
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=f'Total infected persons number in China:{data_gntotal},Death total :{data_deathtotal},Cure total :{data_curetotal}'  ))
+            TextSendMessage(text=f'Total infected persons number in China:{data_gntotal}\n\n,Death total :{data_deathtotal}\n\n,Cure total :{data_curetotal}\n\n'  ))
 
-    elif event.message.text == "start":
+    elif event.message.text == "Hello":
         buttons_template = TemplateSendMessage(
             alt_text='start template',
             template=ButtonsTemplate(
                 title='Services',
-                text='Hello, I am firegod~ What can I help you?',
+                text='Hi, I am firegod~ What can I help you?',
                 thumbnail_image_url='https://cdn.dribbble.com/users/1144347/screenshots/4479125/baymax_dribble.png',
                 actions=[
                     MessageTemplateAction(
                         label='Self check',
                         text='self check'
+                    ),
+                    MessageTemplateAction(
+                        label='Real time data',
+                        text='real time data'
                     ),
                     MessageTemplateAction(
                         label='News',
