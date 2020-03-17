@@ -116,14 +116,15 @@ def handle_FileMessage(event):
 def get_news():
     resp = requests.get('https://interface.sina.cn/news/wap/fymap2020_data.d.json')
     jresp = resp.json()
-    result_title = jresp['results']['title']  #这里读取的格式不对？
+    result_title = jresp['results']['title']  #这里是个关于title的数组？
     #result_summary = jresp['results']['summary']
     #result_sourceUrl = jresp['results']['sourceUrl']
-    content=""
-    for index,rs in result_title:
-        if index == 4:
-            return content
-        content += f'{rs}\n\n'
+    content = ""
+    content = f'{result_title}'
+    #for index,rs in result_title:
+    #    if index == 4:
+    #       return content
+    #    content += f'{rs}\n\n'
     return content
 
      
@@ -185,7 +186,7 @@ def handle_TextMessage(event):
 
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=f'Total infected persons number in China:{data_gntotal}\n\n,Death total :{data_deathtotal}\n\n,Cure total :{data_curetotal}\n\n'  ))
+            TextSendMessage(text=f'Total infected persons number in China:{data_gntotal},\n Death total :{data_deathtotal},\n Cure total :{data_curetotal}'  ))
 
     elif event.message.text == "Hello":
         buttons_template = TemplateSendMessage(
