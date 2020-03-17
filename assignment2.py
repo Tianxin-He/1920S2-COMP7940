@@ -117,8 +117,8 @@ def get_news():
     resp = requests.get('https://interface.sina.cn/news/wap/fymap2020_data.d.json')
     jresp = resp.json()
     result_title = jresp['results']['title']  #这里是个关于title的数组？
-    #result_summary = jresp['results']['summary']
-    #result_sourceUrl = jresp['results']['sourceUrl']
+    result_summary = jresp['results']['summary']
+    result_sourceUrl = jresp['results']['sourceUrl']
     content = ""
     content = f'{result_title}'
     #for index,rs in result_title:
@@ -162,10 +162,15 @@ def handle_TextMessage(event):
         line_bot_api.reply_message(event.reply_token, message)
 
     elif 'news' in event.message.text:
-        content = get_news()
+        resp = requests.get('https://interface.sina.cn/news/wap/fymap2020_data.d.json')
+        jresp = resp.json()
+        result_title = jresp['results']['title']  #这里是个关于title的数组？
+        result_summary = jresp['results']['summary']
+        result_sourceUrl = jresp['results']['sourceUrl']
+
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=content))
+            TextSendMessage(text=f'Title :{result_title},\n Summary :{result_summary},\n Source Url :{result_sourceUrl}'  ))
 
     elif 'hospital' in event.message.text:
         line_bot_api.reply_message(
@@ -186,7 +191,7 @@ def handle_TextMessage(event):
 
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=f'Total infected persons number in China:{data_gntotal},\n Death total :{data_deathtotal},\n Cure total :{data_curetotal}'  ))
+            TextSendMessage(text=f'Total infected persons number in China :{data_gntotal},\n Death total :{data_deathtotal},\n Cure total :{data_curetotal}'  ))
 
     elif event.message.text == "Hello":
         buttons_template = TemplateSendMessage(
@@ -203,10 +208,6 @@ def handle_TextMessage(event):
                     MessageTemplateAction(
                         label='Real time data',
                         text='real time data'
-                    ),
-                    MessageTemplateAction(
-                        label='News',
-                        text='news'
                     ),
                     MessageTemplateAction(
                         label='Hospital location',
