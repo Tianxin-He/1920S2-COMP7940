@@ -25,7 +25,13 @@ from linebot.utils import PY3
 
 from bs4 import BeautifulSoup
 
+import configparser
+
 app = Flask(__name__)
+
+# ref. https://docs.python.org/3/library/configparser.html
+config = configparser.ConfigParser()
+config.read("config.ini")
 
 # get channel_secret and channel_access_token from your environment variable
 channel_secret = os.getenv('LINE_CHANNEL_SECRET','c15ac0aa957a0eb2c158fb66dbf70b72' ) 
@@ -207,7 +213,7 @@ def handle_TextMessage(event):
     elif 'real time data' in event.message.text:
         resp = requests.get('https://interface.sina.cn/news/wap/fymap2020_data.d.json')
         jresp = resp.json()
-        data_gntotal = jresp['data']['gntotal']  #这里读取的格式不对？
+        data_gntotal = jresp['data']['gntotal']  
         data_deathtotal = jresp['data']['deathtotal']
         data_curetotal = jresp['data']['curetotal']
 
