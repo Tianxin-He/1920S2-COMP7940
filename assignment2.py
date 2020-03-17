@@ -141,8 +141,8 @@ def reply_vedio(event):
                 text='Are you sure to call for help?',
                 actions=[
                     URIAction(
-                        label='Call',
-                        text='call',
+                        label='yes',
+                        text='yes',
                         uri='tel:000000'
                     ),
                     MessageTemplateAction(
@@ -166,10 +166,10 @@ def reply_vedio(event):
 
     elif 'data' in event.message.text:
         resp = requests.get('https://interface.sina.cn/news/wap/fymap2020_data.d.json')
-        #currency_data = resp.json()
-        data_gntotal = resp['data']['gntotal']
-        data_deathtotal = resp['data']['deathtotal']
-        data_curetotal = resp['data']['curetotal']
+        jresp = resp.json()
+        data_gntotal = jresp['data']['gntotal']  #这里读取的格式不对？
+        data_deathtotal = jresp['data']['deathtotal']
+        data_curetotal = jresp['data']['curetotal']
 
         line_bot_api.reply_message(
             event.reply_token,
