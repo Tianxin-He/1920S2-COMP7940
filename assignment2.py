@@ -164,7 +164,7 @@ def reply_vedio(event):
             )
         )
 
-    elif 'data' in event.message.text:
+    elif 'news' in event.message.text:
         resp = requests.get('https://interface.sina.cn/news/wap/fymap2020_data.d.json')
         jresp = resp.json()
         data_gntotal = jresp['data']['gntotal']  #这里读取的格式不对？
@@ -175,6 +175,30 @@ def reply_vedio(event):
             event.reply_token,
             TextSendMessage(text=f'Total infected persons number in China:{data_gntotal},Death total :{data_deathtotal},Cure total :{data_curetotal}'  ))
 
+    elif event.message.text == "start":
+        buttons_template = TemplateSendMessage(
+            alt_text='start template',
+            template=ButtonsTemplate(
+                title='Services',
+                text='Hello, I am firegod~ What can I help you?',
+                thumbnail_image_url='https://cdn.dribbble.com/users/1144347/screenshots/4479125/baymax_dribble.png',
+                actions=[
+                    MessageTemplateAction(
+                        label='Self check',
+                        text='self check'
+                    ),
+                    MessageTemplateAction(
+                        label='News',
+                        text='news'
+                    ),
+                    MessageTemplateAction(
+                        label='Hospital location',
+                        text='hospital'
+                    ),
+                ]
+            )
+        )
+        line_bot_api.reply_message(event.reply_token, buttons_template)
         
     else: 
         msg = 'You said: "' + event.message.text + '" '
