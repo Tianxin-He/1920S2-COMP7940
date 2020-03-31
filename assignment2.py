@@ -214,7 +214,7 @@ def handle_TextMessage(event):
         addurl = 'https://restapi.amap.com/v3/geocode/geo?address={}&output=JSON&key={}'.format(address, AMAP_API_KEY)
         addressReq = requests.get(addurl)
         addressDoc = addressReq.json()
-        location = addressDoc['geocodes']['location']
+        location = addressDoc['geocodes'][0]['location']
 
         line_bot_api.reply_message(
             event.reply_token,
