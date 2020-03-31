@@ -219,14 +219,18 @@ def handle_TextMessage(event):
         addurl2 = 'https://restapi.amap.com/v3/place/around?key={}&location={}&radius=10000&types=090100&extensions=base&offset=3'.format(AMAP_API_KEY, location)
         addressReq = requests.get(addurl2)
         addressDoc = addressReq.json()
-        sugName = addressDoc['pois'][1]['name']
-        #sugAddress = addressDoc['pois'][0]['address']
+        sugName0 = addressDoc['pois'][0]['name']
+        sugAddress0 = addressDoc['pois'][0]['address']
+        sugName1 = addressDoc['pois'][1]['name']
+        sugAddress1 = addressDoc['pois'][1]['address']
+        sugName2 = addressDoc['pois'][2]['name']
+        sugAddress2 = addressDoc['pois'][2]['address']
 
-
+        msg = f'为您找到最近的的三家医院及地址：\n 1. {sugName0}  {sugAddress0}\n 2. {sugName1}  {sugAddress1}\n 3. {sugName2}  {sugAddress2}'
 
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(sugName)
+            TextSendMessage(msg)
         )
 
 
@@ -239,7 +243,7 @@ def handle_TextMessage(event):
 
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=f'Total infected persons number in China :{data_gntotal},\n Death total :{data_deathtotal},\n Cure total :{data_curetotal}'  ))
+            TextSendMessage(text=f'Total infected persons number in China :{data_gntotal},\n Death total :{data_deathtotal},\n Cure total :{data_curetotal}'))
 
     elif event.message.text == "Hello":
         buttons_template = TemplateSendMessage(
