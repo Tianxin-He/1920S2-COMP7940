@@ -23,7 +23,7 @@ from linebot.models import *
 #)
 from linebot.utils import PY3
 
-from bs4 import BeautifulSoup
+#from bs4 import BeautifulSoup
 
 import configparser
 
