@@ -1,31 +1,23 @@
 from __future__ import unicode_literals
 
+import configparser
 import os
 import sys
-import redis
-
 from argparse import ArgumentParser
 
-from flask import Flask, request, abort
 import requests
-
-from linebot import (
-    LineBotApi, WebhookParser
-)
+from flask import Flask, request, abort
+from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import (
     InvalidSignatureError
 )
-
 from linebot.models import *
-#(
- #   MessageEvent, TextMessage, TextSendMessage, ImageMessage, VideoMessage, FileMessage, StickerMessage, StickerSendMessage,
-  #  VideoSendMessage,TemplateSendMessage,ConfirmTemplate,PostbackTemplateAction,MessageTemplateAction
-#)
-from linebot.utils import PY3
 
-#from bs4 import BeautifulSoup
-
-import configparser
+# (
+#   MessageEvent, TextMessage, TextSendMessage, ImageMessage, VideoMessage, FileMessage, StickerMessage, StickerSendMessage,
+#  VideoSendMessage,TemplateSendMessage,ConfirmTemplate,PostbackTemplateAction,MessageTemplateAction
+# )
+# from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
@@ -49,6 +41,9 @@ if channel_access_token is None:
 
 line_bot_api = LineBotApi(channel_access_token)
 parser = WebhookParser(channel_secret)
+
+#AMAP_API_KEY
+AMAP_API_KEY = 'b5b581b926e1a908f35f09094bcf413c'
 
 
 @app.route("/callback", methods=['POST'])
@@ -166,7 +161,7 @@ def handle_TextMessage(event):
     elif 'call' in event.message.text:
         message = TemplateSendMessage(
             alt_text='Confirm template',
-            template=ConfirmTemplate(  
+            template=ConfirmTemplate(
                 text='Are you sure to call for help?',
                 actions=[
                     URIAction(
@@ -209,6 +204,23 @@ def handle_TextMessage(event):
                 longitude=114.191687
             )
         )
+
+    elif 'nearest hospital to' in event.message.text:
+        if event.message.text[20:-1] == "":
+            address = "香港浸会大学"
+        else:
+            address = event.message.text[20:-1]
+
+        addurl = 'https://restapi.amap.com/v3/geocode/geo?address={}&output=JSON&key={}'.format(AMAP_API_KEY, address)
+        addressReq = request.get(addurl)
+        addressDoc = addressReq.json()
+        location = addressDoc['geocodes']['location']
+
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(location)
+        )
+
 
     elif 'real time data' in event.message.text:
         resp = requests.get('https://interface.sina.cn/news/wap/fymap2020_data.d.json')

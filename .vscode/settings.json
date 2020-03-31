@@ -1,6 +1,2 @@
 {
-    "python.linting.pylintArgs": [
-        "--errors-only",
-        "--disable=E0401"
-    ]
 }
