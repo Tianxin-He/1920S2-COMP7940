@@ -195,7 +195,7 @@ def handle_TextMessage(event):
             event.reply_token,
             TextSendMessage(text=content))
 
-    elif 'hospital' in event.message.text:
+    elif 'location' in event.message.text:
         line_bot_api.reply_message(
             event.reply_token,LocationSendMessage(
                 title='Hospital location', 
@@ -205,7 +205,7 @@ def handle_TextMessage(event):
             )
         )
 
-    elif 'nearest hospital to' in event.message.text:
+    elif 'nearest hospitals to' in event.message.text:
         if event.message.text[20:-1] == "":
             address = "香港浸会大学"
         else:
