@@ -200,7 +200,7 @@ def handle_TextMessage(event):
             event.reply_token,LocationSendMessage(
                 title='Hospital location', 
                 address='Hong Kong Baptist Hospital', 
-                latitude=22.342483, 
+                latitude=22.342483,
                 longitude=114.191687
             )
         )
@@ -211,14 +211,22 @@ def handle_TextMessage(event):
         else:
             address = event.message.text[20:-1]
 
-        addurl = 'https://restapi.amap.com/v3/geocode/geo?address={}&output=JSON&key={}'.format(address, AMAP_API_KEY)
-        addressReq = requests.get(addurl)
+        addurl1 = 'https://restapi.amap.com/v3/geocode/geo?address={}&output=JSON&key={}'.format(address, AMAP_API_KEY)
+        addressReq = requests.get(addurl1)
         addressDoc = addressReq.json()
         location = addressDoc['geocodes'][0]['location']
 
+        addurl2 = 'https://restapi.amap.com/v3/place/around?key={}&location={}&radius=10000&types=090100&extensions=base&offset=3'.format(AMAP_API_KEY, location)
+        addressReq = requests.get(addurl2)
+        addressDoc = addressReq.json()
+        sugName = addressDoc['sug_address'][0]['name']
+        sugAddress = addressDoc['sug_address'][0]['address']
+
+
+
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(location)
+            TextSendMessage(sugName)
         )
 
 
