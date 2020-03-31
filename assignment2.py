@@ -205,14 +205,14 @@ def handle_TextMessage(event):
             )
         )
 
-    elif 'nearest hospitals to' in event.message.text:
+    elif 'nearest hospital to' in event.message.text:
         if event.message.text[20:-1] == "":
             address = "香港浸会大学"
         else:
             address = event.message.text[20:-1]
 
         addurl = 'https://restapi.amap.com/v3/geocode/geo?address={}&output=JSON&key={}'.format(address, AMAP_API_KEY)
-        addressReq = request.get(addurl)
+        addressReq = requests.get(addurl)
         addressDoc = addressReq.json()
         location = addressDoc['geocodes']['location']
 
