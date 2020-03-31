@@ -219,14 +219,14 @@ def handle_TextMessage(event):
         addurl2 = 'https://restapi.amap.com/v3/place/around?key={}&location={}&radius=10000&types=090100&extensions=base&offset=3'.format(AMAP_API_KEY, location)
         addressReq = requests.get(addurl2)
         addressDoc = addressReq.json()
-        sugName = addressDoc['pois'][0]['name']
+        sugName = addressDoc['pois'][1]['name']
         #sugAddress = addressDoc['pois'][0]['address']
 
 
 
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(sugName[2])
+            TextSendMessage(sugName)
         )
 
 
