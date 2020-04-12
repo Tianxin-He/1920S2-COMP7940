@@ -276,10 +276,14 @@ def handle_TextMessage(event):
                 address=f'{sugAddress0}',
                 latitude=sloc0Lat,
                 longitude=sloc0Lon),
+        )
+        line_bot_api.reply_message(
+            event.reply_token,
+            #TextSendMessage(msg),
             LocationSendMessage(
                 title=f'{sugName1}',
                 address=f'{sugAddress1}',
-                latitude=sloc1Lon,
+                latitude=sloc1Lat,
                 longitude=sloc1Lon)
         )
 
