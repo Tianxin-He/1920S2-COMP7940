@@ -274,8 +274,8 @@ def handle_TextMessage(event):
             LocationSendMessage(
                 title=sugName0,
                 address=sugAddress0,
-                latitude=sloc0Lat,
-                longitude=sloc0Lon))
+                latitude=22.994821,
+                longitude=120.196452))
 
 
     elif 'real time data' in event.message.text:
