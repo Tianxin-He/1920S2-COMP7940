@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 import configparser
 import os
 import sys
+import redis
 from argparse import ArgumentParser
 
 import requests
@@ -13,10 +14,11 @@ from linebot.exceptions import (
 )
 from linebot.models import *
 
-# (
-#   MessageEvent, TextMessage, TextSendMessage, ImageMessage, VideoMessage, FileMessage, StickerMessage, StickerSendMessage,
-#  VideoSendMessage,TemplateSendMessage,ConfirmTemplate,PostbackTemplateAction,MessageTemplateAction
-# )
+HOST = "redis-15288.c16.us-east-1-3.ec2.cloud.redislabs.com"
+PWD = "TE7ntZzxOTUByAsEbINMBAKVtBq8oROi"
+PORT = "15288"
+redis1 = redis.Redis(host = HOST, password = PWD, port = PORT)
+
 
 app = Flask(__name__)
 
@@ -199,7 +201,6 @@ def handle_TextMessage(event):
                         actions=[
                             URITemplateAction(
                                 label='Read More',
-                                #uri='https://www.baidu.com/'
                                 uri=''+ result_sourceUrl[1]
                             )
                         ]
@@ -270,7 +271,7 @@ def handle_TextMessage(event):
         msg = f'为您找到最近的的三家医院及地址：\n 1. {sugName0}  {sugAddress0}\n 2. {sugName1}  {sugAddress1}\n 3. {sugName2}  {sugAddress2}'
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(msg),
+            #TextSendMessage(msg),
             LocationSendMessage(
                 title=f'{sugName0}',
                 address=f'{sugAddress0}',
@@ -320,12 +321,34 @@ def handle_TextMessage(event):
                     ),
                     MessageTemplateAction(
                         label='Hospital location',
-                        text='location'
+                        text='nearest hospital to'
                     ),
                 ]
             )
         )
         line_bot_api.reply_message(event.reply_token, buttons_template)
+
+    elif event.message.text == "redis":
+        # Add your code here
+        msg = event.message.text
+        ans='You have input ' + msg
+        value = redis1.get(msg)
+        if value == None:
+            #print('for 1 times')
+            ans += ' for 1 times'
+            redis1.set(msg, 2)
+        else:
+            value_int = int(value)
+            vt = value_int + 1
+            get = redis1.getset(msg, vt)
+            ans +='for ' + get.decode() + ' times'
+
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(ans)
+        )
+
+
         
     else: 
         msg = 'You said: "' + event.message.text + '" '
