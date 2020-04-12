@@ -360,7 +360,7 @@ def handle_TextMessage(event):
         )
 
     elif "add name:" in event.message.text:
-        name = event.message.text[9:-1]
+        name = event.message.text[9:]
         user_id = SourceUser.sender_id
         user_id = f'{user_id}'
         redis1.set(user_id, name)
