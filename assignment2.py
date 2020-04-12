@@ -270,13 +270,14 @@ def handle_TextMessage(event):
         msg = f'为您找到最近的的三家医院及地址：\n 1. {sugName0}  {sugAddress0}\n 2. {sugName1}  {sugAddress1}\n 3. {sugName2}  {sugAddress2}'
         line_bot_api.reply_message(
             event.reply_token,
-            #TextSendMessage(msg),
+            TextSendMessage(msg),
             LocationSendMessage(
                 title=f'{sugName0}',
                 address=f'{sugAddress0}',
                 latitude=sloc0Lat,
                 longitude=sloc0Lon),
         )
+        '''
         line_bot_api.reply_message(
             event.reply_token,
             #TextSendMessage(msg),
@@ -285,7 +286,7 @@ def handle_TextMessage(event):
                 address=f'{sugAddress1}',
                 latitude=sloc1Lat,
                 longitude=sloc1Lon)
-        )
+        )'''
 
 
 
