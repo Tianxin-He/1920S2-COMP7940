@@ -184,12 +184,12 @@ def handle_TextMessage(event):
         jresp = resp.json()
 
         result_title=[]
-        result_summary=[]
+        result_infoSource=[]
         result_sourceUrl=[]
 
         for index,item in enumerate(jresp):
             result_title.append(item['title'])
-            result_summary.append(item['summary'])
+            result_infoSource.append(item['infoSource'])
             result_sourceUrl.append(item['sourceUrl'])
             if index == 1:
                 break
@@ -201,7 +201,7 @@ def handle_TextMessage(event):
                     CarouselColumn(
                         thumbnail_image_url='https://cdn.mos.cms.futurecdn.net/ssZGg3at5Tad2PpEyUCKh3-320-80.jpg',
                         title=result_title[0],
-                        text=result_summary[0],
+                        text=result_infoSource[0],
                         actions=[
                             URITemplateAction(
                                 label='Read More',
@@ -212,7 +212,7 @@ def handle_TextMessage(event):
                     CarouselColumn(
                         thumbnail_image_url='https://cdn.mos.cms.futurecdn.net/ssZGg3at5Tad2PpEyUCKh3-320-80.jpg',
                         title=result_title[1],
-                        text=result_summary[1],
+                        text=result_infoSource[1],
                         actions=[
                             URITemplateAction(
                                 label='Read More',
