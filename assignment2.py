@@ -198,10 +198,10 @@ def handle_TextMessage(event):
             alt_text='Carousel template',
             template=CarouselTemplate(
                 columns=[
-                    CarouselColumn(
-                        thumbnail_image_url='http://www.nftitalia.com/wp-content/uploads/2017/07/news-1-1600x429.jpg',
+                    CarouselColumn(#  http://www.nftitalia.com/wp-content/uploads/2017/07/news-1-1600x429.jpg; https://9auileboys-flywheel.netdna-ssl.com/wp-content/uploads/2019/03/news.jpg
+                        thumbnail_image_url='https://cdn.mos.cms.futurecdn.net/ssZGg3at5Tad2PpEyUCKh3-320-80.jpg',
                         title=result_title[0],
-                        text=result_infoSource[0],
+                        text='Information Source From: '+result_infoSource[0],
                         actions=[
                             URITemplateAction(
                                 label='Read More',
@@ -210,9 +210,9 @@ def handle_TextMessage(event):
                         ]
                     ),
                     CarouselColumn(
-                        thumbnail_image_url='https://9auileboys-flywheel.netdna-ssl.com/wp-content/uploads/2019/03/news.jpg',
+                        thumbnail_image_url='https://cdn.mos.cms.futurecdn.net/ssZGg3at5Tad2PpEyUCKh3-320-80.jpg',
                         title=result_title[1],
-                        text=result_infoSource[1],
+                        text='Information Source From: '+result_infoSource[1],
                         actions=[
                             URITemplateAction(
                                 label='Read More',
@@ -222,9 +222,9 @@ def handle_TextMessage(event):
                         ]
                     ),
                     CarouselColumn(
-                        thumbnail_image_url='http://www.nftitalia.com/wp-content/uploads/2017/07/news-1-1600x429.jpg',
+                        thumbnail_image_url='https://cdn.mos.cms.futurecdn.net/ssZGg3at5Tad2PpEyUCKh3-320-80.jpg',
                         title=result_title[2],
-                        text=result_infoSource[2],
+                        text='Information Source From: '+result_infoSource[2],
                         actions=[
                             URITemplateAction(
                                 label='Read More',
