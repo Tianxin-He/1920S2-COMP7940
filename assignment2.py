@@ -269,8 +269,8 @@ def handle_TextMessage(event):
             event.reply_token,
             #TextSendMessage(msg),
             LocationSendMessage(
-                title="sugName0",
-                address="sugAddress0",
+                title=''+sugName0,
+                address=''+sugAddress0,
                 latitude=22.994821,
                 longitude=120.196452)
         )
