@@ -266,16 +266,15 @@ def handle_TextMessage(event):
         msg = f'为您找到最近的的三家医院及地址：\n 1. {sugName0}  {sugAddress0}\n 2. {sugName1}  {sugAddress1}\n 3. {sugName2}  {sugAddress2}'
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(msg)
-        )
-
-        line_bot_api.reply_message(
-            event.reply_token,
+            TextSendMessage(msg),
             LocationSendMessage(
                 title=sugName0,
                 address=sugAddress0,
-                latitude=22.994821,
-                longitude=120.196452))
+                latitude=sloc0Lat,
+                longitude=sloc0Lon)
+        )
+
+
 
 
     elif 'real time data' in event.message.text:
