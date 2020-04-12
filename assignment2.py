@@ -270,9 +270,9 @@ def handle_TextMessage(event):
             #TextSendMessage(msg),
             LocationSendMessage(
                 title=f'{sugName0}',
-                address=f'{sloc0Lat},{sloc0Lon}',
-                latitude=22.994821,
-                longitude=120.196452)
+                address=f'{sugAddress0}',
+                latitude=sloc0Lat,
+                longitude=sloc0Lon)
         )
 
 
