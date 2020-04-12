@@ -226,9 +226,6 @@ def handle_TextMessage(event):
         )
         line_bot_api.reply_message(event.reply_token, Carousel_template)
 
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=f'Title :{result_title},\n Summary :{result_summary},\n Source Url :{result_sourceUrl}'  ))
 
     elif event.message.text == "apple news":
         content = apple_news()
