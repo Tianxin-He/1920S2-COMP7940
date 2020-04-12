@@ -305,11 +305,12 @@ def handle_TextMessage(event):
             TextSendMessage(text=f'Total infected persons number in China :{data_gntotal},\n Death total :{data_deathtotal},\n Cure total :{data_curetotal}'))
 
     elif event.message.text == "Hello":
+
         buttons_template = TemplateSendMessage(
             alt_text='start template',
             template=ButtonsTemplate(
                 title='Services',
-                text='Hi, I am firegod~ What can I help you?',
+                text='Hi,’+‘ I am firegod~ What can I help you?',
                 thumbnail_image_url='https://cdn.dribbble.com/users/1144347/screenshots/4479125/baymax_dribble.png',
                 actions=[
                     MessageTemplateAction(
@@ -381,6 +382,19 @@ def handle_TextMessage(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(msg),
+        )
+
+    elif "Hi" in event.message.text:
+        user_id = SourceUser.sender_id
+        user_id = f'{user_id}'
+        msg = redis1.get(user_id)
+        if msg == None:
+            msg = ''
+        else:
+            msg = msg.decode()
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage('Hi,'+msg+' what can help you?')
         )
         
     else: 
