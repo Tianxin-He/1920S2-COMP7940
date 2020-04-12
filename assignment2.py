@@ -191,37 +191,38 @@ def handle_TextMessage(event):
             result_title = item['title']
             result_summary = item['summary']
             result_sourceUrl = item['sourceUrl']
-            if index == 3:
+            if index == 1:
                 break
 
         Carousel_template = TemplateSendMessage(
-        alt_text='Carousel template',
-        template = CarouselTemplate(
-            columns=[
-                CarouselColumn(
-                    thumbnail_image_url='https://cdn.mos.cms.futurecdn.net/ssZGg3at5Tad2PpEyUCKh3-320-80.jpg',
-                    title=result_title[0],
-                    text=result_summary[0],
-                    actions=[
-                        URITemplateAction(
-                            label='Read More',
-                            uri=''.format(result_sourceUrl[0])
-                        )
-                    ]
-                ),
-                CarouselColumn(
-                    thumbnail_image_url='https://cdn.mos.cms.futurecdn.net/ssZGg3at5Tad2PpEyUCKh3-320-80.jpg',
-                    title=result_title[1],
-                    text=result_summary[1],
-                    actions=[
-                        URITemplateAction(
-                            label='Read More',
-                            uri=''.format(result_sourceUrl[1])
-                        )
-                    ]
-                ),
-            ]
-        )
+            alt_text='Carousel template',
+            template=CarouselTemplate(
+                columns=[
+                    CarouselColumn(
+                        thumbnail_image_url='https://cdn.mos.cms.futurecdn.net/ssZGg3at5Tad2PpEyUCKh3-320-80.jpg',
+                        title=result_title[0],
+                        text=result_summary[0],
+                        actions=[
+                            URITemplateAction(
+                                label='Read More',
+                                uri='https://www.baidu.com/'
+                            )
+                        ]
+                    ),
+                    CarouselColumn(
+                        thumbnail_image_url='https://cdn.mos.cms.futurecdn.net/ssZGg3at5Tad2PpEyUCKh3-320-80.jpg',
+                        title=result_title[1],
+                        text=result_summary[1],
+                        actions=[
+                            URITemplateAction(
+                                label='Read More',
+                                uri='https://www.baidu.com/'
+                                #uri=''.format(result_sourceUrl[1])
+                            )
+                        ]
+                    ),
+                ]
+            )
         )
         line_bot_api.reply_message(event.reply_token, Carousel_template)
 
