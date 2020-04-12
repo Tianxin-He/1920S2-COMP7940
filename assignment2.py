@@ -188,10 +188,10 @@ def handle_TextMessage(event):
         result_sourceUrl=[]
 
         for index,item in enumerate(jresp):
-            result_title = item['title']
-            result_summary = item['summary']
-            result_sourceUrl = item['sourceUrl']
-            if index == 1:
+            result_title.append(item['title'])
+            result_summary.append(item['summary'])
+            result_sourceUrl.append(item['sourceUrl'])
+            if index == 2:
                 break
 
         Carousel_template = TemplateSendMessage(
@@ -199,7 +199,6 @@ def handle_TextMessage(event):
             template=CarouselTemplate(
                 columns=[
                     CarouselColumn(
-                        thumbnail_image_url='https://cdn.mos.cms.futurecdn.net/ssZGg3at5Tad2PpEyUCKh3-320-80.jpg',
                         title=result_title[0],
                         text=result_summary[0],
                         actions=[
@@ -216,8 +215,20 @@ def handle_TextMessage(event):
                         actions=[
                             URITemplateAction(
                                 label='Read More',
-                                uri='https://www.baidu.com/'
-                                #uri=''.format(result_sourceUrl[1])
+                                #uri='https://www.baidu.com/'
+                                uri=''.format(result_sourceUrl[1])
+                            )
+                        ]
+                    ),
+                    CarouselColumn(
+                        thumbnail_image_url='https://cdn.mos.cms.futurecdn.net/ssZGg3at5Tad2PpEyUCKh3-320-80.jpg',
+                        title=result_title[2],
+                        text=result_summary[2],
+                        actions=[
+                            URITemplateAction(
+                                label='Read More',
+                                # uri='https://www.baidu.com/'
+                                uri=''.format(result_sourceUrl[2])
                             )
                         ]
                     ),
