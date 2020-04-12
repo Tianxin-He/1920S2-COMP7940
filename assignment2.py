@@ -210,7 +210,7 @@ def handle_TextMessage(event):
                         ]
                     ),
                     CarouselColumn(
-                        thumbnail_image_url='https://cdn.mos.cms.futurecdn.net/ssZGg3at5Tad2PpEyUCKh3-320-80.jpg',
+                        #thumbnail_image_url='https://cdn.mos.cms.futurecdn.net/ssZGg3at5Tad2PpEyUCKh3-320-80.jpg',
                         title=result_title[1],
                         text=result_infoSource[1],
                         actions=[
