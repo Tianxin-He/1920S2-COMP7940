@@ -261,7 +261,10 @@ def handle_TextMessage(event):
         l0=sugLocation0.split(",")
         sloc0Lon=l0[0]
         sloc0Lat=l0[1]
-        print(sloc0Lat,sloc0Lon)
+        l1 = sugLocation1.split(",")
+        sloc1Lon = l1[0]
+        sloc1Lat = l1[1]
+
 
 
         msg = f'为您找到最近的的三家医院及地址：\n 1. {sugName0}  {sugAddress0}\n 2. {sugName1}  {sugAddress1}\n 3. {sugName2}  {sugAddress2}'
@@ -272,7 +275,12 @@ def handle_TextMessage(event):
                 title=f'{sugName0}',
                 address=f'{sugAddress0}',
                 latitude=sloc0Lat,
-                longitude=sloc0Lon)
+                longitude=sloc0Lon),
+            LocationSendMessage(
+                title=f'{sugName1}',
+                address=f'{sugAddress1}',
+                latitude=sloc1Lon,
+                longitude=sloc1Lon)
         )
 
 
