@@ -377,7 +377,7 @@ def handle_TextMessage(event):
         if msg == None:
             msg ="You haven't set name, please try add name:<YOUR NAME> first. "
         else:
-            msg.decode()
+            msg = msg.decode()
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(msg),
