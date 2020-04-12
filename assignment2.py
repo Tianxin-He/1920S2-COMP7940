@@ -199,13 +199,13 @@ def handle_TextMessage(event):
             template=CarouselTemplate(
                 columns=[
                     CarouselColumn(
-                        thumbnail_image_url='https://cdn.mos.cms.futurecdn.net/ssZGg3at5Tad2PpEyUCKh3-320-80.jpg',
+                        #thumbnail_image_url='https://cdn.mos.cms.futurecdn.net/ssZGg3at5Tad2PpEyUCKh3-320-80.jpg',
                         title=result_title[0],
                         text=result_infoSource[0],
                         actions=[
                             URITemplateAction(
                                 label='Read More',
-                                uri='https://www.baidu.com/'
+                                uri=''+ result_sourceUrl[0]
                             )
                         ]
                     ),
@@ -216,8 +216,8 @@ def handle_TextMessage(event):
                         actions=[
                             URITemplateAction(
                                 label='Read More',
-                                uri='https://www.baidu.com/'
-                                #uri=''+ result_sourceUrl[1]
+                                #uri='https://www.baidu.com/'
+                                uri=''+ result_sourceUrl[1]
                             )
                         ]
                     ),
