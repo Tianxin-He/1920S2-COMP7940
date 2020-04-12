@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 
-#from bs4 import BeautifulSoup
 import configparser
 import os
 import sys
@@ -18,7 +17,6 @@ from linebot.models import *
 #   MessageEvent, TextMessage, TextSendMessage, ImageMessage, VideoMessage, FileMessage, StickerMessage, StickerSendMessage,
 #  VideoSendMessage,TemplateSendMessage,ConfirmTemplate,PostbackTemplateAction,MessageTemplateAction
 # )
-# from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
@@ -131,21 +129,6 @@ def get_news():
     #    content += f'{rs}\n\n'
     return content
 
-def apple_news():
-    target_url = 'https://tw.appledaily.com/new/realtime'
-    print('Start parsing appleNews....')
-    rs = requests.session()
-    res = rs.get(target_url, verify=False)
-    soup = BeautifulSoup(res.text, 'html.parser')
-    content = ""
-    for index, data in enumerate(soup.select('.rtddt a'), 0):
-        if index == 4:
-            return content
-        link = data['href']
-        content += '{}\n\n'.format(link)
-    return content
-
-     
 
 
 # Handler function for Text Message
@@ -240,12 +223,6 @@ def handle_TextMessage(event):
         line_bot_api.reply_message(event.reply_token, Carousel_template)
 
 
-    elif event.message.text == "apple news":
-        content = apple_news()
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=content))
-        return 0
 
     elif 'location' in event.message.text:
         line_bot_api.reply_message(
@@ -273,17 +250,32 @@ def handle_TextMessage(event):
         addressDoc = addressReq.json()
         sugName0 = addressDoc['pois'][0]['name']
         sugAddress0 = addressDoc['pois'][0]['address']
+        sugLocation0 = addressDoc['pois'][0]['location']
         sugName1 = addressDoc['pois'][1]['name']
         sugAddress1 = addressDoc['pois'][1]['address']
+        sugLocation1 = addressDoc['pois'][0]['location']
         sugName2 = addressDoc['pois'][2]['name']
         sugAddress2 = addressDoc['pois'][2]['address']
+        sugLocation2 = addressDoc['pois'][0]['location']
+
+        l0=sugLocation0.split(",")
+        sloc0Lat=l0[0]
+        sloc0Lon=l0[1]
+
 
         msg = f'为您找到最近的的三家医院及地址：\n 1. {sugName0}  {sugAddress0}\n 2. {sugName1}  {sugAddress1}\n 3. {sugName2}  {sugAddress2}'
-
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(msg)
         )
+
+        line_bot_api.reply_message(
+            event.reply_token,
+            LocationSendMessage(
+                title=sugName0,
+                address=sugAddress0,
+                latitude=sloc0Lat,
+                longitude=sloc0Lon))
 
 
     elif 'real time data' in event.message.text:
