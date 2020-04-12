@@ -191,7 +191,7 @@ def handle_TextMessage(event):
             result_title.append(item['title'])
             result_summary.append(item['summary'])
             result_sourceUrl.append(item['sourceUrl'])
-            if index == 2:
+            if index == 1:
                 break
 
         Carousel_template = TemplateSendMessage(
@@ -220,18 +220,7 @@ def handle_TextMessage(event):
                             )
                         ]
                     ),
-                    CarouselColumn(
-                        thumbnail_image_url='https://cdn.mos.cms.futurecdn.net/ssZGg3at5Tad2PpEyUCKh3-320-80.jpg',
-                        title=result_title[2],
-                        text=result_summary[2],
-                        actions=[
-                            URITemplateAction(
-                                label='Read More',
-                                uri='https://www.baidu.com/'
-                                # uri=''.format(result_sourceUrl[2])
-                            )
-                        ]
-                    ),
+
                 ]
             )
         )
