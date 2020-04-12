@@ -351,7 +351,7 @@ def handle_TextMessage(event):
 
     elif event.message.text == "user id":
         #LineProfile profile = lineApiClient.getProfile().getResponseData()
-        user_id = SourceUser.user_id
+        user_id = SourceUser.sender_id
 
         msg = f'您的ID为：\n 1.Name {user_id} '
         #msg = f'您的用户资料为：\n 1.Name {profile.getDisplayName()} \n 2.ID {profile.getUserId()}  \n 3.Status {profile.getStatusMessage()} '
