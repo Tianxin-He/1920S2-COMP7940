@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+#from bs4 import BeautifulSoup
 import configparser
 import os
 import sys
@@ -12,7 +13,6 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import *
-from bs4 import BeautifulSoup
 
 # (
 #   MessageEvent, TextMessage, TextSendMessage, ImageMessage, VideoMessage, FileMessage, StickerMessage, StickerSendMessage,
@@ -188,12 +188,42 @@ def handle_TextMessage(event):
         result_sourceUrl=[]
 
         for index,item in enumerate(jresp):
-            result_title = jresp[index]['title']
-            result_summary = jresp[index]['summary']
-            result_sourceUrl = jresp[index]['sourceUrl']
-            if index == 0:
+            result_title = item['title']
+            result_summary = item['summary']
+            result_sourceUrl = item['sourceUrl']
+            if index == 3:
                 break
 
+        Carousel_template = TemplateSendMessage(
+        alt_text='Carousel template',
+        template = CarouselTemplate(
+            columns=[
+                CarouselColumn(
+                    thumbnail_image_url='https://cdn.mos.cms.futurecdn.net/ssZGg3at5Tad2PpEyUCKh3-320-80.jpg',
+                    title=result_title[0],
+                    text=result_summary[0],
+                    actions=[
+                        URITemplateAction(
+                            label='Read More',
+                            uri=''.format(result_sourceUrl[0])
+                        )
+                    ]
+                ),
+                CarouselColumn(
+                    thumbnail_image_url='https://cdn.mos.cms.futurecdn.net/ssZGg3at5Tad2PpEyUCKh3-320-80.jpg',
+                    title=result_title[1],
+                    text=result_summary[1],
+                    actions=[
+                        URITemplateAction(
+                            label='Read More',
+                            uri=''.format(result_sourceUrl[1])
+                        )
+                    ]
+                ),
+            ]
+        )
+        )
+        line_bot_api.reply_message(event.reply_token, Carousel_template)
 
         line_bot_api.reply_message(
             event.reply_token,
