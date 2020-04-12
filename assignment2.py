@@ -199,6 +199,7 @@ def handle_TextMessage(event):
             template=CarouselTemplate(
                 columns=[
                     CarouselColumn(
+                        thumbnail_image_url='https://cdn.mos.cms.futurecdn.net/ssZGg3at5Tad2PpEyUCKh3-320-80.jpg',
                         title=result_title[0],
                         text=result_summary[0],
                         actions=[
