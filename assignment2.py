@@ -12,6 +12,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import *
+from bs4 import BeautifulSoup
 
 # (
 #   MessageEvent, TextMessage, TextSendMessage, ImageMessage, VideoMessage, FileMessage, StickerMessage, StickerSendMessage,
@@ -179,11 +180,20 @@ def handle_TextMessage(event):
         line_bot_api.reply_message(event.reply_token, message)
 
     elif 'news' in event.message.text:
-        resp = requests.get('https://interface.sina.cn/news/wap/fymap2020_data.d.json')
+        resp = requests.get('https://raw.githubusercontent.com/BlankerL/DXY-COVID-19-Data/master/json/DXYNews-TimeSeries.json')
         jresp = resp.json()
-        result_title = jresp['results']['title']  #这里是个关于title的数组？
-        result_summary = jresp['results']['summary']
-        result_sourceUrl = jresp['results']['sourceUrl']
+
+        result_title=[]
+        result_summary=[]
+        result_sourceUrl=[]
+
+        for index,item in enumerate(jresp):
+            result_title = jresp[index]['title']
+            result_summary = jresp[index]['summary']
+            result_sourceUrl = jresp[index]['sourceUrl']
+            if index == 0:
+                break
+
 
         line_bot_api.reply_message(
             event.reply_token,
@@ -194,6 +204,7 @@ def handle_TextMessage(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
+        return 0
 
     elif 'location' in event.message.text:
         line_bot_api.reply_message(
@@ -263,7 +274,7 @@ def handle_TextMessage(event):
                     ),
                     MessageTemplateAction(
                         label='Hospital location',
-                        text='hospital'
+                        text='location'
                     ),
                 ]
             )
