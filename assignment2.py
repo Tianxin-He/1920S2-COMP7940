@@ -353,14 +353,29 @@ def handle_TextMessage(event):
         #LineProfile profile = lineApiClient.getProfile().getResponseData()
         user_id = SourceUser.sender_id
 
-        msg = f'您的ID为：\n 1.Name {user_id} '
-        #msg = f'您的用户资料为：\n 1.Name {profile.getDisplayName()} \n 2.ID {profile.getUserId()}  \n 3.Status {profile.getStatusMessage()} '
+        msg = f'您的ID为：\n{user_id}'
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(msg),
         )
 
+    elif event.message.text == "add name:":
+        name = event.message.text[10:-1]
+        redis1.set(SourceUser.sender_id, name)
+        msg = f'您的名字已设为：\n{redis1.get(SourceUser.sender_id)}'
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(msg),
+        )
 
+    elif event.message.text == "get name:":
+        msg = redis1.get(SourceUser.sender_id)
+        if msg == "":
+            msg ="You haven't set name, please try add name:<YOUR NAME> first. "
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(msg),
+        )
         
     else: 
         msg = 'You said: "' + event.message.text + '" '
