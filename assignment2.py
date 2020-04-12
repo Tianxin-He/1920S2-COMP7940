@@ -359,12 +359,12 @@ def handle_TextMessage(event):
             TextSendMessage(msg),
         )
 
-    elif "add name" in event.message.text:
-        name = event.message.text[10:-1]
+    elif "add name:" in event.message.text:
+        name = event.message.text[9:-1]
         user_id = SourceUser.sender_id
         user_id = f'{user_id}'
         redis1.set(user_id, name)
-        msg = f'您的名字已设为：\n{redis1.get(user_id)}'
+        msg = f'您的名字已设为：\n{redis1.get(user_id).decode()}'
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(msg),
@@ -373,7 +373,7 @@ def handle_TextMessage(event):
     elif event.message.text == "get name":
         user_id = SourceUser.sender_id
         user_id = f'{user_id}'
-        msg = redis1.get(user_id)
+        msg = redis1.get(user_id).decode()
         if msg == '':
             msg ="You haven't set name, please try add name:<YOUR NAME> first. "
         line_bot_api.reply_message(
