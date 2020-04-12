@@ -222,7 +222,7 @@ def handle_TextMessage(event):
                         ]
                     ),
                     CarouselColumn(
-                        thumbnail_image_url='https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSGEFX4dIEY2rQIL1F6P5V30-7I6Ph5rb2QxGMiGzv1CdnQ_6eN&usqp=CAU',
+                        thumbnail_image_url='http://www.nftitalia.com/wp-content/uploads/2017/07/news-1-1600x429.jpg',
                         title=result_title[2],
                         text=result_infoSource[2],
                         actions=[
