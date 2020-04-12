@@ -373,9 +373,11 @@ def handle_TextMessage(event):
     elif event.message.text == "get name":
         user_id = SourceUser.sender_id
         user_id = f'{user_id}'
-        msg = redis1.get(user_id).decode()
+        msg = redis1.get(user_id)
         if msg == None:
             msg ="You haven't set name, please try add name:<YOUR NAME> first. "
+        else:
+            msg.decode()
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(msg),
