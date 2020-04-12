@@ -14,6 +14,7 @@ from linebot.exceptions import (
 )
 from linebot.models import *
 
+
 HOST = "redis-15288.c16.us-east-1-3.ec2.cloud.redislabs.com"
 PWD = "TE7ntZzxOTUByAsEbINMBAKVtBq8oROi"
 PORT = "15288"
@@ -346,6 +347,17 @@ def handle_TextMessage(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(ans)
+        )
+
+    elif event.message.text == "user id":
+        #LineProfile profile = lineApiClient.getProfile().getResponseData()
+        user_id = SourceUser.sender_id
+
+        msg = f'您的ID为：\n 1.Name {user_id} '
+        #msg = f'您的用户资料为：\n 1.Name {profile.getDisplayName()} \n 2.ID {profile.getUserId()}  \n 3.Status {profile.getStatusMessage()} '
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(msg),
         )
 
 
