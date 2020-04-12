@@ -191,7 +191,7 @@ def handle_TextMessage(event):
             result_title.append(item['title'])
             result_infoSource.append(item['infoSource'])
             result_sourceUrl.append(item['sourceUrl'])
-            if index == 1:
+            if index == 3:
                 break
 
         Carousel_template = TemplateSendMessage(
@@ -199,7 +199,7 @@ def handle_TextMessage(event):
             template=CarouselTemplate(
                 columns=[
                     CarouselColumn(
-                        #thumbnail_image_url='https://cdn.mos.cms.futurecdn.net/ssZGg3at5Tad2PpEyUCKh3-320-80.jpg',
+                        thumbnail_image_url='http://www.nftitalia.com/wp-content/uploads/2017/07/news-1-1600x429.jpg',
                         title=result_title[0],
                         text=result_infoSource[0],
                         actions=[
@@ -210,7 +210,7 @@ def handle_TextMessage(event):
                         ]
                     ),
                     CarouselColumn(
-                        #thumbnail_image_url='https://cdn.mos.cms.futurecdn.net/ssZGg3at5Tad2PpEyUCKh3-320-80.jpg',
+                        thumbnail_image_url='https://9auileboys-flywheel.netdna-ssl.com/wp-content/uploads/2019/03/news.jpg',
                         title=result_title[1],
                         text=result_infoSource[1],
                         actions=[
@@ -221,6 +221,18 @@ def handle_TextMessage(event):
                             )
                         ]
                     ),
+                    CarouselColumn(
+                        thumbnail_image_url='https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSGEFX4dIEY2rQIL1F6P5V30-7I6Ph5rb2QxGMiGzv1CdnQ_6eN&usqp=CAU',
+                        title=result_title[2],
+                        text=result_infoSource[2],
+                        actions=[
+                            URITemplateAction(
+                                label='Read More',
+                                # uri='https://www.baidu.com/'
+                                uri='' + result_sourceUrl[2]
+                            )
+                        ]
+                    )
 
                 ]
             )
