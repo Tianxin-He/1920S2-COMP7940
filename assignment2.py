@@ -365,7 +365,7 @@ def handle_TextMessage(event):
         user_id = SourceUser.sender_id
         user_id = f'{user_id}'
         redis1.set(user_id, name)
-        msg = f'您的名字已设为：\n{redis1.get(user_id).decode()}'
+        msg = f'You have successfully set your name as：\n{redis1.get(user_id).decode()}'
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(msg),
@@ -392,6 +392,7 @@ def handle_TextMessage(event):
             msg = ''
         else:
             msg = msg.decode()
+            msg += "~"
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage('Hi,'+msg+' what can help you?')
