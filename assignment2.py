@@ -259,8 +259,8 @@ def handle_TextMessage(event):
         sugLocation2 = addressDoc['pois'][0]['location']
 
         l0=sugLocation0.split(",")
-        sloc0Lat=l0[0]
-        sloc0Lon=l0[1]
+        sloc0Lon=l0[0]
+        sloc0Lat=l0[1]
         print(sloc0Lat,sloc0Lon)
 
 
