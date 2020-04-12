@@ -216,7 +216,7 @@ def handle_TextMessage(event):
                             URITemplateAction(
                                 label='Read More',
                                 #uri='https://www.baidu.com/'
-                                uri=''.format(result_sourceUrl[1])
+                                uri=result_sourceUrl[1]
                             )
                         ]
                     ),
@@ -227,8 +227,8 @@ def handle_TextMessage(event):
                         actions=[
                             URITemplateAction(
                                 label='Read More',
-                                # uri='https://www.baidu.com/'
-                                uri=''.format(result_sourceUrl[2])
+                                uri='https://www.baidu.com/'
+                                # uri=''.format(result_sourceUrl[2])
                             )
                         ]
                     ),
