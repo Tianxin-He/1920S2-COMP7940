@@ -117,7 +117,7 @@ def handle_FileMessage(event):
 	TextSendMessage(text="Nice file!")
     )
 
-# Self check process
+
 def get_news():
     resp = requests.get('https://interface.sina.cn/news/wap/fymap2020_data.d.json')
     jresp = resp.json()
@@ -237,7 +237,7 @@ def handle_TextMessage(event):
         )
 
     elif 'nearest hospital to' in event.message.text:
-        if event.message.text[20:-1] == "":
+        if event.message.text[20:] == "":
             address = "香港浸会大学"
         else:
             address = event.message.text[20:-1]
@@ -310,12 +310,12 @@ def handle_TextMessage(event):
             alt_text='start template',
             template=ButtonsTemplate(
                 title='Services',
-                text='Hi,’+‘ I am firegod~ What can I help you?',
+                text='Hi, I am firegod~ What can I help you?',
                 thumbnail_image_url='https://cdn.dribbble.com/users/1144347/screenshots/4479125/baymax_dribble.png',
                 actions=[
                     MessageTemplateAction(
-                        label='Self check',
-                        text='self check'
+                        label='Real time news',
+                        text='news'
                     ),
                     MessageTemplateAction(
                         label='Real time data',
@@ -351,8 +351,8 @@ def handle_TextMessage(event):
         )
 
     elif event.message.text == "user id":
-        #LineProfile profile = lineApiClient.getProfile().getResponseData()
-        user_id = SourceUser.sender_id
+        user_id = line_bot_api.get_profile('<user_id>')
+        #user_id = SourceUser.sender_id
 
         msg = f'您的ID为：\n{user_id}'
         line_bot_api.reply_message(
@@ -365,7 +365,7 @@ def handle_TextMessage(event):
         user_id = SourceUser.sender_id
         user_id = f'{user_id}'
         redis1.set(user_id, name)
-        msg = f'You have successfully set your name as：\n{redis1.get(user_id).decode()}'
+        msg = f'You have set your name as：\n{redis1.get(user_id).decode()}'
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(msg),
@@ -397,6 +397,11 @@ def handle_TextMessage(event):
             event.reply_token,
             TextSendMessage('Hi,'+msg+' what can help you?')
         )
+
+    #elif "self check" in event.message.text:
+
+
+
         
     else: 
         msg = 'You said: "' + event.message.text + '" '
