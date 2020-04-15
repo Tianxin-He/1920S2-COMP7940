@@ -10,7 +10,7 @@ import requests
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import (
-    InvalidSignatureError
+    InvalidSignatureError,LineBotApiError
 )
 from linebot.models import *
 
@@ -351,10 +351,14 @@ def handle_TextMessage(event):
         )
 
     elif event.message.text == "user id":
-        user_id = line_bot_api.get_profile('<user_id>')
-        #user_id = SourceUser.sender_id
+        try:
+            profile = line_bot_api.get_profile('<user_id>')
+            msg = f'您的ID为：\n{profile.user_id}'
+        except LineBotApiError as e:
+            e.message
+            #user_id = SourceUser.sender_id
 
-        msg = f'您的ID为：\n{user_id}'
+
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(msg),
