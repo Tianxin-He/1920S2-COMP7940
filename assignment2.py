@@ -96,7 +96,6 @@ def handle_PosbackEvent(event):
 
     if "action=question1" in event.postback.data:
         if "ansYes" in event.postback.data:
-
             Count += 1
 
         message = TemplateSendMessage(
@@ -120,15 +119,68 @@ def handle_PosbackEvent(event):
         line_bot_api.reply_message(event.reply_token, message)
 
     elif "action=question2" in event.postback.data:
+        if "ansYes" in event.postback.data:
+            Count += 1
 
-        msg = f'question2 postback temCount:：\n {Count}'
+        message = TemplateSendMessage(
+            alt_text='Confirm template',
+            template=ConfirmTemplate(
+                text='Question3?',
+                actions=[
+                    PostbackAction(
+                        label='yes',
+                        display_text='yes',
+                        data='action=question3&ansYes'
+                    ),
+                    PostbackAction(
+                        label='no',
+                        display_text='no',
+                        data='action=question3&ansNo'
+                    )
+                ]
+            )
+        )
+        line_bot_api.reply_message(event.reply_token, message)
+
+    elif "action=question3" in event.postback.data:
+        if "ansYes" in event.postback.data:
+            Count += 1
+
+        message = TemplateSendMessage(
+            alt_text='Confirm template',
+            template=ConfirmTemplate(
+                text='Question4?',
+                actions=[
+                    PostbackAction(
+                        label='yes',
+                        display_text='yes',
+                        data='action=question4&ansYes'
+                    ),
+                    PostbackAction(
+                        label='no',
+                        display_text='no',
+                        data='action=question4&ansNo'
+                    )
+                ]
+            )
+        )
+        line_bot_api.reply_message(event.reply_token, message)
+
+    elif "action=question4" in event.postback.data:
+        if "ansYes" in event.postback.data:
+            Count += 1
+            
+        msg = f'Postback temCount:：\n {Count}'
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(msg))
 
+
     else:
-        msg = TextSendMessage('did not match')
-        line_bot_api.reply_message(event.reply_token, msg)
+        msg = f'question2 postback temCount:：\n {Count}'
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(msg))
 
 
 '''
