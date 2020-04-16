@@ -101,7 +101,7 @@ def handle_PosbackEvent(event):
         message = TemplateSendMessage(
             alt_text='Confirm template',
             template=ConfirmTemplate(
-                text='Question2?',
+                text='Question2: Are you currently required to undergo compulsory quarantine by the HKSAR Government?',
                 actions=[
                     PostbackAction(
                         label='yes',
@@ -125,7 +125,7 @@ def handle_PosbackEvent(event):
         message = TemplateSendMessage(
             alt_text='Confirm template',
             template=ConfirmTemplate(
-                text='Question3?',
+                text='Question3: Do you have any of the following symtoms?(Fever,fatigue,cough,diarrhoea,vomiting or flu-like symtoms)',
                 actions=[
                     PostbackAction(
                         label='yes',
@@ -176,7 +176,7 @@ def handle_PosbackEvent(event):
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(msg))
-        elif Count < 4 & Count > 1:
+        elif Count > 1:
             msg = f'You are likely to get illness:：\n {Count}'
             line_bot_api.reply_message(
                 event.reply_token,
@@ -569,7 +569,7 @@ def handle_TextMessage(event):
         message = TemplateSendMessage(
             alt_text='Confirm template',
             template=ConfirmTemplate(
-                text='Question1?',
+                text='Question1: Have you travelled outside Hong Kong in the last 14 days?',
                 actions=[
                     PostbackAction(
                         label='yes',
