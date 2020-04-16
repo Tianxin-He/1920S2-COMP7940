@@ -90,7 +90,7 @@ def handle_PosbackEvent(event):
 
     msg = TextSendMessage(event.postback.data)
     line_bot_api.reply_message(event.reply_token, msg)
-    
+
     '''
      tempCount = 0
 
@@ -468,12 +468,12 @@ def handle_TextMessage(event):
                 actions=[
                     PostbackAction(
                         label='yes',
-                        text='yes',
+                        display_text='yes',
                         data='action=question1&ansYes'
                     ),
                     PostbackAction(
                         label='no',
-                        text='no',
+                        display_text='no',
                         data='action=question2&ansNo'
                     )
                 ]
