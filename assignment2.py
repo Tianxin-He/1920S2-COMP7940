@@ -169,11 +169,13 @@ def handle_PosbackEvent(event):
     elif "action=question4" in event.postback.data:
         if "ansYes" in event.postback.data:
             Count += 1
-            
+
         msg = f'Postback temCount:：\n {Count}'
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(msg))
+
+        Count = 0  #清零
 
 
     else:
@@ -564,7 +566,7 @@ def handle_TextMessage(event):
                     PostbackAction(
                         label='no',
                         display_text='no',
-                        data='action=question2&ansNo'
+                        data='action=question1&ansNo'
                     )
                 ]
             )
