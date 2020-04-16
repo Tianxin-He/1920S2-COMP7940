@@ -474,12 +474,12 @@ def handle_TextMessage(event):
                 thumbnail_image_url='https://cdn.dribbble.com/users/1144347/screenshots/4479125/baymax_dribble.png',
                 actions=[
                     MessageTemplateAction(
-                        label='Real time news',
-                        text='news'
+                        label='Self check',
+                        text='self check'
                     ),
                     MessageTemplateAction(
-                        label='Real time data',
-                        text='real time data'
+                        label='Real time news',
+                        text='news'
                     ),
                     MessageTemplateAction(
                         label='Hospital location',
