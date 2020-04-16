@@ -115,8 +115,11 @@ def handle_PosbackEvent(event):
         line_bot_api.reply_message(event.reply_token, message)
 
     elif "action=question2" in event.postback.data:
-        msg = TextSendMessage('question2 postback temCount:'+tempCount)
-        line_bot_api.reply_message(event.reply_token, msg)
+
+        msg = f'question2 postback temCount:：\n {tempCount}'
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(msg))
 
     else:
         msg = TextSendMessage('did not match')
