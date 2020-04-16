@@ -90,7 +90,27 @@ def handle_PosbackEvent(event):
 
     tempCount = 0
     if "action=question1" in event.postback.data:
-        msg = TextSendMessage(event.postback.data)
+        TemplateSendMessage(
+            alt_text='Confirm template',
+            template=ConfirmTemplate(
+                text='Question2?',
+                actions=[
+                    PostbackAction(
+                        label='yes',
+                        display_text='yes',
+                        data='action=question2&ansYes'
+                    ),
+                    PostbackAction(
+                        label='no',
+                        display_text='no',
+                        data='action=question2&ansNo'
+                    )
+                ]
+            )
+        )
+
+    elif "action=question2" in event.postback.data:
+        msg = TextSendMessage('question2 postback')
         line_bot_api.reply_message(event.reply_token, msg)
 
     else:
