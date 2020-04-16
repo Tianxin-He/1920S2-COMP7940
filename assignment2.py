@@ -95,7 +95,7 @@ def handle_PosbackEvent(event):
     global Count
 
     if "action=question1" in event.postback.data:
-        if "ansYes" in event.postback.data:
+        if "ansNo" in event.postback.data:
             Count += 1
 
         message = TemplateSendMessage(
@@ -119,7 +119,7 @@ def handle_PosbackEvent(event):
         line_bot_api.reply_message(event.reply_token, message)
 
     elif "action=question2" in event.postback.data:
-        if "ansYes" in event.postback.data:
+        if "ansNo" in event.postback.data:
             Count += 1
 
         message = TemplateSendMessage(
@@ -143,13 +143,13 @@ def handle_PosbackEvent(event):
         line_bot_api.reply_message(event.reply_token, message)
 
     elif "action=question3" in event.postback.data:
-        if "ansYes" in event.postback.data:
+        if "ansNo" in event.postback.data:
             Count += 1
 
         message = TemplateSendMessage(
             alt_text='Confirm template',
             template=ConfirmTemplate(
-                text='Question4?',
+                text='Question4: Have you been in close contact with any confirmed or suspected cases of novel coronavirus?',
                 actions=[
                     PostbackAction(
                         label='yes',
@@ -167,7 +167,7 @@ def handle_PosbackEvent(event):
         line_bot_api.reply_message(event.reply_token, message)
 
     elif "action=question4" in event.postback.data:
-        if "ansYes" in event.postback.data:
+        if "ansNo" in event.postback.data:
             Count += 1
 
         # Check the count
