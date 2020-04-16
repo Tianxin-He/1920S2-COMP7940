@@ -172,17 +172,17 @@ def handle_PosbackEvent(event):
 
         # Check the count
         if Count == 4:
-            msg = f'You little possible to get illness:：\n {Count}'
+            msg = f'You little possible to get illness:( {Count})'
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(msg))
         elif Count > 1:
-            msg = f'You are likely to get illness:：\n {Count}'
+            msg = f'You are likely to get illness:({Count})'
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(msg))
         else:
-            msg = f'You are in the risk of illness：\n {Count}'
+            msg = f'You are in the risk of illness:({Count})'
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(msg))
