@@ -88,7 +88,11 @@ def callback():
 # Handler function for PostbackEvent
 def handle_PosbackEvent(event):
 
-    tempCount = 0
+    msg = TextSendMessage(event.postback.data)
+    line_bot_api.reply_message(event.reply_token, msg)
+    
+    '''
+     tempCount = 0
 
     if "action=question1" in event.postback.data:
 
@@ -122,6 +126,12 @@ def handle_PosbackEvent(event):
             event.reply_token,
             TextSendMessage(text="TempCount : "+tempCount)
         )
+
+
+    :param event:
+    :return:
+    '''
+
 
 
 
