@@ -170,16 +170,29 @@ def handle_PosbackEvent(event):
         if "ansYes" in event.postback.data:
             Count += 1
 
-        msg = f'Postback temCount:：\n {Count}'
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(msg))
+        # Check the count
+        if Count == 4:
+            msg = f'You little possible to get illness:：\n {Count}'
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(msg))
+        elif Count < 4 & Count > 1:
+            msg = f'You are likely to get illness:：\n {Count}'
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(msg))
+        else:
+            msg = f'You are in the risk of illness：\n {Count}'
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(msg))
 
-        Count = 0  #清零
+        # 清零
+        Count = 0
 
 
     else:
-        msg = f'question2 postback temCount:：\n {Count}'
+        msg = f'No Match:：\n {Count}'
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(msg))
