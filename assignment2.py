@@ -46,8 +46,11 @@ parser = WebhookParser(channel_secret)
 # AMAP_API_KEY
 AMAP_API_KEY = 'b5b581b926e1a908f35f09094bcf413c'
 
+# Global Count
+Count = 0
 
 @app.route("/callback", methods=['POST'])
+
 def callback():
     signature = request.headers['X-Line-Signature']
 
@@ -85,14 +88,16 @@ def callback():
 
     return 'OK'
 
+
+
 # Handler function for PostbackEvent
 def handle_PosbackEvent(event):
+    global Count
 
-    tempCount = 0
     if "action=question1" in event.postback.data:
-        if "Yes" in event.postback.data:
-            tempCount += 1
+        if "ansYes" in event.postback.data:
 
+            Count += 1
 
         message = TemplateSendMessage(
             alt_text='Confirm template',
@@ -116,7 +121,7 @@ def handle_PosbackEvent(event):
 
     elif "action=question2" in event.postback.data:
 
-        msg = f'question2 postback temCount:：\n {tempCount}'
+        msg = f'question2 postback temCount:：\n {Count}'
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(msg))
