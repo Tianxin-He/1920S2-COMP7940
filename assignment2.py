@@ -90,6 +90,10 @@ def handle_PosbackEvent(event):
 
     tempCount = 0
     if "action=question1" in event.postback.data:
+        if "Yes" in event.postback.data:
+            tempCount += 1
+
+
         message = TemplateSendMessage(
             alt_text='Confirm template',
             template=ConfirmTemplate(
@@ -111,13 +115,13 @@ def handle_PosbackEvent(event):
         line_bot_api.reply_message(event.reply_token, message)
 
     elif "action=question2" in event.postback.data:
-        msg = TextSendMessage('question2 postback')
+        msg = TextSendMessage('question2 postback temCount:'+tempCount)
         line_bot_api.reply_message(event.reply_token, msg)
 
     else:
         msg = TextSendMessage('did not match')
         line_bot_api.reply_message(event.reply_token, msg)
-    tempCount = 0
+
 
 '''
     if "action=question1" in event.postback.data:
