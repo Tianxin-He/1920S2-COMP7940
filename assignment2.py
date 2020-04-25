@@ -80,7 +80,7 @@ def callback():
             handle_FileMessage(event)
         if isinstance(event.message, StickerMessage):
             handle_StickerMessage(event)
-        if isinstance(event.message, LocationMessage):
+        if isinstance(event, LocationMessage):
             handle_LocationMessage(event)
 
         if not isinstance(event, MessageEvent):
