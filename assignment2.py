@@ -308,7 +308,7 @@ def handle_LocationMessage(event):
     sugtel1 = addressDoc['pois'][0]['tel']
     sugtel2 = addressDoc['pois'][0]['tel']
 
-    msg = f'为您找到最近的的三家汽车维修店及地址：\n 1. {sugName0}  {sugAddress0}\n 2. {sugName1}  {sugAddress1}\n 3. {sugName2}  {sugAddress2}'
+    #msg = f'为您找到最近的的三家汽车维修店及地址：\n 1. {sugName0}  {sugAddress0}\n 2. {sugName1}  {sugAddress1}\n 3. {sugName2}  {sugAddress2}'
 
 
     Carousel_template = TemplateSendMessage(
@@ -322,8 +322,8 @@ def handle_LocationMessage(event):
                     text='Address: ' + sugAddress0,
                     actions=[
                         URITemplateAction(
-                            label='Read More',
-                            uri=f'tel:{sugtel0}'
+                            label='Telephone',
+                            uri='tel:'+sugtel0
                         )
                     ]
                 ),
@@ -333,8 +333,8 @@ def handle_LocationMessage(event):
                     text='Address: ' + sugAddress1,
                     actions=[
                         URITemplateAction(
-                            label='Read More',
-                            uri=f'tel:{sugtel1}'
+                            label='Telephone',
+                            uri='tel:'+sugtel1
                         )
                     ]
                 ),
@@ -344,8 +344,8 @@ def handle_LocationMessage(event):
                     text='Address: ' + sugAddress2,
                     actions=[
                         URITemplateAction(
-                            label='Read More',
-                            uri=f'tel:{sugtel2}'
+                            label='Telephone',
+                            uri='tel:'+sugtel2
                         )
                     ]
                 )
