@@ -287,8 +287,8 @@ def handle_VideoMessage(event):
 
 # Handler function for Location Message
 def handle_LocationMessage(event):
-    msg = event.message.title
 
+    msg = f'The title is {event.message.title}'
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text= msg)
