@@ -303,6 +303,11 @@ def handle_LocationMessage(event):
     sugName2 = addressDoc['pois'][2]['name']
     sugAddress2 = addressDoc['pois'][2]['address']
     sugLocation2 = addressDoc['pois'][0]['location']
+
+    sugtel0 = addressDoc['pois'][0]['tel']
+    sugtel1 = addressDoc['pois'][0]['tel']
+    sugtel2 = addressDoc['pois'][0]['tel']
+
     msg = f'为您找到最近的的三家汽车维修店及地址：\n 1. {sugName0}  {sugAddress0}\n 2. {sugName1}  {sugAddress1}\n 3. {sugName2}  {sugAddress2}'
 
 
@@ -312,35 +317,35 @@ def handle_LocationMessage(event):
             columns=[
                 CarouselColumn(
 
-                    thumbnail_image_url='https://9auileboys-flywheel.netdna-ssl.com/wp-content/uploads/2019/03/news.jpg',
+                    thumbnail_image_url='https://img.51miz.com/preview/element/00/01/08/29/E-1082937-04831968.jpg',
                     title=f'{sugName0}',
                     text='Address: ' + sugAddress0,
                     actions=[
                         URITemplateAction(
                             label='Read More',
-                            uri='https://www.baidu.com/'
+                            uri=f'tel:{sugtel0}'
                         )
                     ]
                 ),
                 CarouselColumn(
-                    thumbnail_image_url='https://9auileboys-flywheel.netdna-ssl.com/wp-content/uploads/2019/03/news.jpg',
+                    thumbnail_image_url='https://img.51miz.com/preview/element/00/01/08/29/E-1082937-04831968.jpg',
                     title=f'{sugName1}',
                     text='Address: ' + sugAddress1,
                     actions=[
                         URITemplateAction(
                             label='Read More',
-                            uri='https://www.baidu.com/'
+                            uri=f'tel:{sugtel1}'
                         )
                     ]
                 ),
                 CarouselColumn(
-                    thumbnail_image_url='https://9auileboys-flywheel.netdna-ssl.com/wp-content/uploads/2019/03/news.jpg',
+                    thumbnail_image_url='https://img.51miz.com/preview/element/00/01/08/29/E-1082937-04831968.jpg',
                     title=f'{sugName2}',
                     text='Address: ' + sugAddress2,
                     actions=[
                         URITemplateAction(
                             label='Read More',
-                            uri='https://www.baidu.com/'
+                            uri=f'tel:{sugtel2}'
                         )
                     ]
                 )
