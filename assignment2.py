@@ -322,8 +322,8 @@ def handle_LocationMessage(event):
                     text='Address: ' + sugAddress0,
                     actions=[
                         URITemplateAction(
-                            label='Telephone',
-                            uri='tel:'+sugtel0
+                            label=f'Telephone:{sugtel0}',
+                            uri=f'tel:{sugtel0}'
                         )
                     ]
                 ),
@@ -333,8 +333,8 @@ def handle_LocationMessage(event):
                     text='Address: ' + sugAddress1,
                     actions=[
                         URITemplateAction(
-                            label='Telephone',
-                            uri='tel:'+sugtel1
+                            label=f'Telephone:{sugtel1}',
+                            uri=f'tel:{sugtel1}'
                         )
                     ]
                 ),
@@ -344,8 +344,8 @@ def handle_LocationMessage(event):
                     text='Address: ' + sugAddress2,
                     actions=[
                         URITemplateAction(
-                            label='Telephone',
-                            uri='tel:'+sugtel2
+                            label=f'Telephone:{sugtel2}',
+                            uri=f'tel:{sugtel2}'
                         )
                     ]
                 )
