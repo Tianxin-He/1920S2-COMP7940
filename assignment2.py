@@ -289,10 +289,26 @@ def handle_VideoMessage(event):
 def handle_LocationMessage(event):
 
     location = f'{event.message.longitude},{event.message.latitude}'
+
+    addurl2 = 'https://restapi.amap.com/v3/place/around?key={}&location={}&radius=10000&types=090100&extensions=base&offset=3'.format(
+        AMAP_API_KEY, location)
+    addressReq = requests.get(addurl2)
+    addressDoc = addressReq.json()
+    sugName0 = addressDoc['pois'][0]['name']
+    sugAddress0 = addressDoc['pois'][0]['address']
+    sugLocation0 = addressDoc['pois'][0]['location']
+    sugName1 = addressDoc['pois'][1]['name']
+    sugAddress1 = addressDoc['pois'][1]['address']
+    sugLocation1 = addressDoc['pois'][0]['location']
+    sugName2 = addressDoc['pois'][2]['name']
+    sugAddress2 = addressDoc['pois'][2]['address']
+    sugLocation2 = addressDoc['pois'][0]['location']
+    msg = f'为您找到最近的的三家医院及地址：\n 1. {sugName0}  {sugAddress0}\n 2. {sugName1}  {sugAddress1}\n 3. {sugName2}  {sugAddress2}'
+
     #msg = f'The latitudeeeeeeeee is {event.message.latitude}'
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text= location)
+        TextSendMessage(text= msg)
     )
 
 
