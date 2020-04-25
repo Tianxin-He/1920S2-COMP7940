@@ -305,11 +305,57 @@ def handle_LocationMessage(event):
     sugLocation2 = addressDoc['pois'][0]['location']
     msg = f'为您找到最近的的三家汽车维修店及地址：\n 1. {sugName0}  {sugAddress0}\n 2. {sugName1}  {sugAddress1}\n 3. {sugName2}  {sugAddress2}'
 
-    #msg = f'The latitudeeeeeeeee is {event.message.latitude}'
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text= msg)
+
+    Carousel_template = TemplateSendMessage(
+        alt_text='Carousel template',
+        template=CarouselTemplate(
+            columns=[
+                CarouselColumn(
+
+                    thumbnail_image_url='https://9auileboys-flywheel.netdna-ssl.com/wp-content/uploads/2019/03/news.jpg',
+                    title=f'{sugName0}',
+                    text='Address: ' + sugAddress0,
+                    actions=[
+                        URITemplateAction(
+                            label='Read More',
+                            uri='https://www.baidu.com/'
+                        )
+                    ]
+                ),
+                CarouselColumn(
+                    thumbnail_image_url='https://9auileboys-flywheel.netdna-ssl.com/wp-content/uploads/2019/03/news.jpg',
+                    title=f'{sugName1}',
+                    text='Address: ' + sugAddress1,
+                    actions=[
+                        URITemplateAction(
+                            label='Read More',
+                            uri='https://www.baidu.com/'
+                        )
+                    ]
+                ),
+                CarouselColumn(
+                    thumbnail_image_url='https://9auileboys-flywheel.netdna-ssl.com/wp-content/uploads/2019/03/news.jpg',
+                    title=f'{sugName2}',
+                    text='Address: ' + sugAddress2,
+                    actions=[
+                        URITemplateAction(
+                            label='Read More',
+                            uri='https://www.baidu.com/'
+                        )
+                    ]
+                )
+
+            ]
+        )
     )
+    line_bot_api.reply_message(event.reply_token, Carousel_template)
+
+    '''
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text= msg)
+        )
+    '''
 
 
 # Handler function for File Message
