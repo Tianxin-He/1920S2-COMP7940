@@ -80,7 +80,7 @@ def callback():
             handle_FileMessage(event)
         if isinstance(event.message, StickerMessage):
             handle_StickerMessage(event)
-        if isinstance(event, LocationMessage):
+        if isinstance(event.message, LocationMessage):
             handle_LocationMessage(event)
 
         if not isinstance(event, MessageEvent):
@@ -265,19 +265,32 @@ def handle_ImageMessage(event):
 
 # Handler function for Video Message
 def handle_VideoMessage(event):
-
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text="Nice video!")
+    message = TemplateSendMessage(
+        alt_text='Confirm template',
+        template=ConfirmTemplate(
+            text='Question3: Do you have any of the following symtoms?(Fever,fatigue,cough,diarrhoea,vomiting or flu-like symtoms)',
+            actions=[
+                PostbackAction(
+                    label='yes',
+                    display_text='yes',
+                    data='action=question3&ansYes'
+                ),
+                PostbackAction(
+                    label='no',
+                    display_text='no',
+                    data='action=question3&ansNo'
+                )
+            ]
+        )
     )
+    line_bot_api.reply_message(event.reply_token, message)
 
 # Handler function for Location Message
 def handle_LocationMessage(event):
-    msg = event.address
-    print(msg)
+
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=msg)
+        TextSendMessage(text="Nice Location!")
     )
 
 
