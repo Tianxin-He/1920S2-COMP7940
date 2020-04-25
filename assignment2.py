@@ -290,7 +290,7 @@ def handle_LocationMessage(event):
 
     location = f'{event.message.longitude},{event.message.latitude}'
 
-    addurl2 = 'https://restapi.amap.com/v3/place/around?key={}&location={}&radius=10000&types=090100&extensions=base&offset=3'.format(
+    addurl2 = 'https://restapi.amap.com/v3/place/around?key={}&location={}&radius=10000&types=030000&extensions=base&offset=3'.format(
         AMAP_API_KEY, location)
     addressReq = requests.get(addurl2)
     addressDoc = addressReq.json()
@@ -303,7 +303,7 @@ def handle_LocationMessage(event):
     sugName2 = addressDoc['pois'][2]['name']
     sugAddress2 = addressDoc['pois'][2]['address']
     sugLocation2 = addressDoc['pois'][0]['location']
-    msg = f'为您找到最近的的三家医院及地址：\n 1. {sugName0}  {sugAddress0}\n 2. {sugName1}  {sugAddress1}\n 3. {sugName2}  {sugAddress2}'
+    msg = f'为您找到最近的的三家汽车维修店及地址：\n 1. {sugName0}  {sugAddress0}\n 2. {sugName1}  {sugAddress1}\n 3. {sugName2}  {sugAddress2}'
 
     #msg = f'The latitudeeeeeeeee is {event.message.latitude}'
     line_bot_api.reply_message(
