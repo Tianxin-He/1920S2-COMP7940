@@ -10,7 +10,7 @@ import requests
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import (
-    InvalidSignatureError, LineBotApiError
+    InvalidSignatureError,
 )
 from linebot.models import *
 
@@ -80,6 +80,8 @@ def callback():
             handle_FileMessage(event)
         if isinstance(event.message, StickerMessage):
             handle_StickerMessage(event)
+        if isinstance(event.message, LocationMessage):
+            handle_LocationMessage(event)
 
         if not isinstance(event, MessageEvent):
             continue
@@ -263,9 +265,19 @@ def handle_ImageMessage(event):
 
 # Handler function for Video Message
 def handle_VideoMessage(event):
+
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text="Nice video!")
+    )
+
+# Handler function for Location Message
+def handle_LocationMessage(event):
+    msg = event.message.text
+    print(msg)
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text="Nice Location!")
     )
 
 
